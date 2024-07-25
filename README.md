@@ -5,4 +5,4 @@ Flask web application and RESTful API for it
 - [x] html templates
 - [x] base models
 - [x] unit tests
-- [ ] user credentials processing
+- [x] user credentials processing
