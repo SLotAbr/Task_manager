@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
 from app.models import User
@@ -21,7 +21,7 @@ def login():
 	if form.validate_on_submit():
 		user = User.query.filter_by(username=form.username.data).first()
 		if user is None or not user.check_password(form.password.data):
-			# TODO: notify the client about wrong credentials
+			flash('Invalid username or password')
 			return redirect(url_for('login'))
 		login_user(user, remember=form.remember_me.data)
 		return redirect(url_for('index'))
@@ -44,6 +44,6 @@ def register():
 		user.set_password(form.password.data)
 		db.session.add(user)
 		db.session.commit()
-		# TODO: notify the client that the registration is successful
+		flash('Your registration is successful!')
 		return redirect(url_for('login'))
 	return render_template('register.html', form=form)
