@@ -1,7 +1,9 @@
 from datetime import datetime
-from app import db, login
+from time import time
+from app import app, db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+import jwt
 
 
 # the UserMixin class includes implementation of the following methods:
@@ -21,6 +23,27 @@ class User(UserMixin, db.Model):
 
 	def __repr__(self):
 		return '<User {}>'.format(self.username)
+
+	def get_reset_password_token(self, expires_in=600):
+		# The contents of the jwt token can be decoded easily by anyone. Yet 
+		# the payload is signed and protected from tampering: you cannot change
+		# its contents without invalidating it. JWT (RFC7519) is just a compact
+		# way to safely transmit claims from an issuer to the audience over HTTP.
+		# If you want to encrypt the content (make it visible only to issuer and 
+		# the consumer), there is JWE standard for that (jose, jwcrypto)
+		return jwt.encode(
+			{'reset_password': self.id, 'exp': time() + expires_in},
+			app.config['SECRET_KEY'], algorithm='HS256')
+
+	@staticmethod
+	def verify_reset_password_token(token):
+		try:
+			id = jwt.decode(token, app.config['SECRET_KEY'],
+							algorithms=['HS256'])['reset_password']
+		except:
+			# The token cannot be validated or is expired: returns 'None'
+			return
+		return User.query.get(id)
 
 
 class Task(db.Model):
