@@ -8,6 +8,19 @@ Flask web application and RESTful API for it
 - [x] user credentials processing
 - [x] JWT tokens for emails
 
+## API
+| HTTP Method | Resource URL | Notes |
+| - | - | - |
+| `POST` | */api/tasks* | Register a new task |
+| `GET` | */api/tasks* | Return the collection of all tasks |
+| `GET` | */api/tasks/\<id>* | Return a task |
+| `PUT` | */api/tasks/\<id>* | Modify a task |
+| `DELETE` | */api/tasks/\<id>* | Delete a task |
+### TODO
+- [ ] restrict user access
+- [ ] API errors may return JSON responses
+- [ ] write tests before a merge
+
 ## How to
 ### Run the application
 1. `cd Task_manager`
