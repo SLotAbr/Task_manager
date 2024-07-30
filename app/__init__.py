@@ -14,8 +14,12 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 # this view function will be used to protect routes with the 'login_required' 
 # decorator from unauthenticated users
-login.login_view = 'login'
+login.login_view = 'auth.login'
 mail = Mail(app)
+
+
+from app.auth import bp as auth_bp
+app.register_blueprint(auth_bp, url_prefix='/auth')
 
 
 from app import routes, models
