@@ -49,3 +49,8 @@ export MAIL_PORT=<your_port>
 4. Navigate to `http://127.0.0.1:5000/reset_password_request` (can be done through the login page)
 5. Request password reset for this email: `test@example.com`
 6. Check the server for the reset link
+
+### Check the application API
+1. Activate the virtual environment
+2. Run any of the following commands
+* `http GET http://localhost:5000/api/tasks/1`
