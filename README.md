@@ -54,3 +54,4 @@ export MAIL_PORT=<your_port>
 1. Activate the virtual environment
 2. Run any of the following commands
 * `http GET http://localhost:5000/api/tasks/1`
+* `http GET http://localhost:5000/api/tasks`

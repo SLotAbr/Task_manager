@@ -9,7 +9,8 @@ def create_task():
 
 @bp.route('/tasks', methods=['GET'])
 def get_tasks():
-	pass
+	tasks = Task.query.all()
+	return { 'items': [item.to_dict() for item in tasks] }
 
 
 @bp.route('/tasks/<int:id>', methods=['GET'])
