@@ -9,12 +9,12 @@ def create_task():
 
 @bp.route('/tasks', methods=['GET'])
 def get_tasks():
-	return Task.query.get_or_404(id).to_dict()
+	pass
 
 
 @bp.route('/tasks/<int:id>', methods=['GET'])
 def get_task(id):
-	pass
+	return Task.query.get_or_404(id).to_dict()
 
 
 @bp.route('/tasks/<int:id>', methods=['PUT'])

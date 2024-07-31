@@ -2,6 +2,7 @@ from datetime import datetime
 from time import time
 from app import app, db, login
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import url_for
 from flask_login import UserMixin
 import jwt
 
