@@ -59,6 +59,25 @@ class Task(db.Model):
 	def __repr__(self):
 		return '<Task {}>'.format(self.title)
 
+	def to_dict(self):
+		data = {
+			'id': self.id,
+			'title': self.title,
+			'description': self.description,
+			'created_at': self.created_at,
+			'updated_at': self.updated_at,
+			'status': self.status,
+			'executor_id': self.executor_id,
+			'self': url_for('api.get_task', id=self.id),
+		}
+		return data
+
+	def from_dict(self, data):
+		# the client can change only the following fields
+		for field in ['title', 'description', 'status', 'executor_id']:
+			if field in data:
+				setattr(self, field, data[field])
+
 
 # connects Flask's user session with the user representation in the database
 # Flask-login requires you to define this function

@@ -1,4 +1,5 @@
 from app.api import bp
+from app.models import Task
 
 
 @bp.route('/tasks', methods=['POST'])
@@ -8,7 +9,7 @@ def create_task():
 
 @bp.route('/tasks', methods=['GET'])
 def get_tasks():
-	pass
+	return Task.query.get_or_404(id).to_dict()
 
 
 @bp.route('/tasks/<int:id>', methods=['GET'])
