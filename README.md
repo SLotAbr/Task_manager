@@ -55,3 +55,4 @@ export MAIL_PORT=<your_port>
 2. Run any of the following commands
 * `http GET http://localhost:5000/api/tasks/1`
 * `http GET http://localhost:5000/api/tasks`
+* `http POST http://localhost:5000/api/tasks title="API test" description="check any API route" executor_id=1`

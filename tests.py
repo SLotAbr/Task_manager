@@ -60,6 +60,13 @@ class UserModelCase(unittest.TestCase):
 		f = u1.tasks.all()
 		self.assertEqual(f, [t1, t4])
 
+	def test_API(self):
+		# checks for the 'create_task' view function
+		# [ERROR] do not include title or executor_id fields in your request
+		# [ERROR] use an incorrect executor_id
+		# [ERROR] create a task twice
+		pass
+
 
 if __name__ == '__main__':
 	unittest.main(verbosity=2)

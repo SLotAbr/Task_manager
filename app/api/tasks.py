@@ -8,9 +8,9 @@ from app.models import User, Task
 def create_task():
 	data = request.get_json() or {}
 	if ('title' not in data) or ('executor_id' not in data):
-		# TODO: a 400 response (bad request) with message:
-		# your request must include title and executor_id fields
-		pass
+		payload = {'error':'Bad Request'}
+		payload['message'] = 'your request must include title and executor_id fields'
+		return payload, 400
 	User.query.get_or_404(data['executor_id'])
 	is_existed = Task.query.filter_by(
 		title=data['title'], 
@@ -18,9 +18,10 @@ def create_task():
 		executor_id=data['executor_id']
 	).first()
 	if is_existed:
-		# TODO: a 409 response (conflict) with task_id and message:
-		# A task with given fields already exists. Its id: {}. You can use the 'PUT' method to update it
-		pass
+		payload = {'error':'Conflict'}
+		payload['message'] = 'A task with given fields already exists. '\
+			f'Its id: {is_existed.id}. You can use the "PUT" method to update it'
+		return payload, 409
 	else:
 		# 'title', 'executor_id' are in data; 
 		# an executor with this id is existing;
