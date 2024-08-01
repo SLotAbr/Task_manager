@@ -60,6 +60,11 @@ def update_task(id):
 							f"the following fiels: {', '.join(fields)}"
 		return payload, 400
 
+	if ('status' in data) and \
+		(data['status'] not in ['Created', 'In progress', 'Completed']):
+		payload = {'error':'Bad Request', 'message': "Incorrect status value"}
+		return payload, 400
+
 	fields = ['title', 'description', 'executor_id']
 	if any(map(lambda field: field in data, fields)):
 		is_existed = Task.query.filter_by(
