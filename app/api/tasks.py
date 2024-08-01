@@ -9,7 +9,7 @@ def create_task():
 	data = request.get_json() or {}
 	if ('title' not in data) or ('executor_id' not in data):
 		payload = {'error':'Bad Request'}
-		payload['message'] = 'your request must include title and executor_id fields'
+		payload['message'] = 'Your request must include title and executor_id fields'
 		return payload, 400
 	User.query.get_or_404(data['executor_id'])
 	is_existed = Task.query.filter_by(
@@ -50,7 +50,35 @@ def get_task(id):
 
 @bp.route('/tasks/<int:id>', methods=['PUT'])
 def update_task(id):
-	pass
+	task = Task.query.get_or_404(id)
+	data = request.get_json() or {}
+
+	fields = ['title', 'description', 'status', 'executor_id']
+	if all(map(lambda field: field not in data, fields)):
+		payload = {'error':'Bad Request'}
+		payload['message'] = "Your request must include any of "\
+							f"the following fiels: {', '.join(fields)}"
+		return payload, 400
+
+	fields = ['title', 'description', 'executor_id']
+	if any(map(lambda field: field in data, fields)):
+		is_existed = Task.query.filter_by(
+			title=data['title'] if 'title' in data \
+				else task.title, 
+			description=data['description'] if 'description' in data \
+				else task.description,
+			executor_id=data['executor_id'] if 'executor_id' in data \
+				else task.executor_id
+		).first()
+		if is_existed:
+			payload = {'error':'Conflict'}
+			payload['message'] = "Your request creates a duplicate task."
+				f"Duplicate ID: {is_existed.id}"\
+			return payload, 409
+
+	task.from_dict(data)
+	db.session.commit()
+	return task.to_dict()
 
 
 @bp.route('/tasks/<int:id>', methods=['DELETE'])
