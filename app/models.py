@@ -77,7 +77,7 @@ class Task(db.Model):
 		# the client can change only the following fields
 		for field in ['title', 'description', 'status', 'executor_id']:
 			if field in data:
-				self.updated_at = datetime.utcnow
+				self.updated_at = datetime.utcnow()
 				setattr(self, field, data[field])
 
 
