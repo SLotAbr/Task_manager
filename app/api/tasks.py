@@ -72,8 +72,8 @@ def update_task(id):
 		).first()
 		if is_existed:
 			payload = {'error':'Conflict'}
-			payload['message'] = "Your request creates a duplicate task."
-				f"Duplicate ID: {is_existed.id}"\
+			payload['message'] = "Your request creates a duplicate task. " \
+				f"Duplicate ID: {is_existed.id}"
 			return payload, 409
 
 	task.from_dict(data)

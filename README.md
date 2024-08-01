@@ -56,3 +56,6 @@ export MAIL_PORT=<your_port>
 * `http GET http://localhost:5000/api/tasks/1`
 * `http GET http://localhost:5000/api/tasks`
 * `http POST http://localhost:5000/api/tasks title="API test" description="check any API route" executor_id=1`
+* `http PUT http://localhost:5000/api/tasks/1 title="endpoint check"`
+* `http PUT http://localhost:5000/api/tasks/1 description="send HTTP request to any API route"`
+* `http PUT http://localhost:5000/api/tasks/1 status="Completed"`

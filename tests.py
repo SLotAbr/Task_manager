@@ -65,6 +65,10 @@ class UserModelCase(unittest.TestCase):
 		# [ERROR] do not include title or executor_id fields in your request
 		# [ERROR] use an incorrect executor_id
 		# [ERROR] create a task twice
+		# checks for the 'update_task' view function
+		# [ERROR] do not include all of the following fields: 
+		# 		['title', 'description', 'status', 'executor_id']
+		# [ERROR] create a duplicate task
 		pass
 
 
