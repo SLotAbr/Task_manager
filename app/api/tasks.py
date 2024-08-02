@@ -1,6 +1,7 @@
 from flask import request, url_for
 from app import db
 from app.api import bp
+from app.api.auth import token_auth
 from app.models import User, Task
 
 
@@ -38,17 +39,20 @@ def create_task():
 
 
 @bp.route('/tasks', methods=['GET'])
+@token_auth.login_required
 def get_tasks():
 	tasks = Task.query.all()
 	return { 'items': [item.to_dict() for item in tasks] }
 
 
 @bp.route('/tasks/<int:id>', methods=['GET'])
+@token_auth.login_required
 def get_task(id):
 	return Task.query.get_or_404(id).to_dict()
 
 
 @bp.route('/tasks/<int:id>', methods=['PUT'])
+@token_auth.login_required
 def update_task(id):
 	task = Task.query.get_or_404(id)
 	data = request.get_json() or {}
@@ -87,6 +91,7 @@ def update_task(id):
 
 
 @bp.route('/tasks/<int:id>', methods=['DELETE'])
+@token_auth.login_required
 def delete_task(id):
 	task = Task.query.get_or_404(id)
 	task.delete()

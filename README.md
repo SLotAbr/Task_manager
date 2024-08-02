@@ -17,8 +17,8 @@ Flask web application and RESTful API for it
 | `PUT` | */api/tasks/\<id>* | Modify a task |
 | `DELETE` | */api/tasks/\<id>* | Delete a task |
 ### TODO
-- [ ] restrict user access
-- [ ] API errors may return JSON responses
+- [x] add access tokens
+- [x] API errors may return JSON responses
 - [ ] write tests before a merge
 
 ## How to
@@ -52,7 +52,8 @@ export MAIL_PORT=<your_port>
 
 ### Check the application API
 1. Activate the virtual environment
-2. Run any of the following commands
+2. Get a token from `http --auth test:test POST http://localhost:5000/api/tokens`
+3. Run any of the following commands (add these keys and values: `-A bearer --auth <token>`)
 * `http GET http://localhost:5000/api/tasks/1`
 * `http GET http://localhost:5000/api/tasks`
 * `http POST http://localhost:5000/api/tasks title="API test" description="check any API route" executor_id=1`
