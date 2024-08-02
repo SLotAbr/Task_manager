@@ -59,3 +59,4 @@ export MAIL_PORT=<your_port>
 * `http PUT http://localhost:5000/api/tasks/1 title="endpoint check"`
 * `http PUT http://localhost:5000/api/tasks/1 description="send HTTP request to any API route"`
 * `http PUT http://localhost:5000/api/tasks/1 status="Completed"`
+* `http DELETE http://localhost:5000/api/tasks/1`

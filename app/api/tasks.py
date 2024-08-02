@@ -88,4 +88,7 @@ def update_task(id):
 
 @bp.route('/tasks/<int:id>', methods=['DELETE'])
 def delete_task(id):
-	pass
+	task = Task.query.get_or_404(id)
+	task.delete()
+	db.session.commit()
+	return {'message':f'The task with id={id} deleted'}
