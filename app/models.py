@@ -1,4 +1,6 @@
-from datetime import datetime
+from base64 import b64encode
+from datetime import datetime, timedelta
+from os import urandom
 from time import time
 from app import app, db, login
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -15,6 +17,8 @@ class User(UserMixin, db.Model):
 	email = db.Column(db.String(120), index=True, unique=True)
 	password_hash = db.Column(db.String(128))
 	tasks = db.relationship('Task', backref='executor', lazy='dynamic')
+	token = db.Column(db.String(32), index=True, unique=True)
+	token_expiration = db.Column(db.DateTime)
 
 	def set_password(self, password):
 		self.password_hash = generate_password_hash(password)
@@ -45,6 +49,26 @@ class User(UserMixin, db.Model):
 			# The token cannot be validated or is expired: returns 'None'
 			return
 		return User.query.get(id)
+
+	# this tokens is used for API authentication purposes
+	def get_token(self, expires_in=3600):
+		now = datetime.utcnow()
+		if self.token and self.token_expiration > now + timedelta(seconds=60):
+			return self.token
+		self.token = b64encode(urandom(32)).decode('utf-8')
+		self.token_expiration = now + timedelta(seconds=expires_in)
+		db.session.add(self)
+		return self.token
+
+	def revoke_token(self):
+		self.token_expiration = datetime.utcnow() - timedelta(seconds=1)
+
+	@staticmethod
+	def check_token(token):
+		user = User.query.filter_by(token=token).first()
+		if user is None or user.token_expiration < datetime.utcnow():
+			return None
+		return user
 
 
 class Task(db.Model):
