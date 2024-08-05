@@ -2,11 +2,12 @@
 Flask web application and RESTful API for it
 
 ## Development stages
-- [x] html templates
+- [x] HTML templates
 - [x] base models
 - [x] unit tests
 - [x] user credentials processing
 - [x] JWT tokens for emails
+- [x] API and unit tests for it
 
 ## API
 | HTTP Method | Resource URL | Notes |
