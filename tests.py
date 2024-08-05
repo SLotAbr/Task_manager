@@ -4,6 +4,7 @@ import os
 # program will drop all the existing tables after the first test
 os.environ['DATABASE_URL'] = 'sqlite://' # an in-memory SQLite database
 
+import requests
 import unittest
 from app import app, db
 from app.models import User, Task
