@@ -6,6 +6,8 @@
 	<body>
 		<div>
 			Task manager: <a href="{{ url_for('index') }}">Home</a>
+			<a href="{{ url_for('users') }}">Users</a>
+			<a href="{{ url_for('tasks') }}">Tasks</a>
 			{% if current_user.is_anonymous %}
 			<a href="{{ url_for('auth.login') }}">Login</a>
 			{% else %}
