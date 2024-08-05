@@ -4,6 +4,7 @@ import os
 # program will drop all the existing tables after the first test
 os.environ['DATABASE_URL'] = 'sqlite://' # an in-memory SQLite database
 
+import requests
 import unittest
 from app import app, db
 from app.models import User, Task
@@ -59,6 +60,61 @@ class UserModelCase(unittest.TestCase):
 
 		f = u1.tasks.all()
 		self.assertEqual(f, [t1, t4])
+
+	def test_API(self):
+		# The app instance is created as a global variable and because of that 
+		# the app API works with the original database. The way to fix it:
+		# write a function that creates an application instance at runtime.
+		url = 'http://localhost:5000/api/tokens'
+		token = requests.post(url, auth=('test','test')).json()['token']
+		# print(Task.query.all())
+		auth_data = {'Authorization':f'Bearer {token}'}
+
+		# errors for the 'create_task' view function
+		# [ERROR] do not include title or executor_id fields in your request
+		# [ERROR] use an incorrect executor_id
+		# [ERROR] create a task twice
+		# errors for the 'update_task' view function
+		# [ERROR] do not include all of the following fields: 
+		# 		['title', 'description', 'status', 'executor_id']
+		# [ERROR] create a duplicate task
+
+		# POST request
+		data = {
+			'title':'API testing',
+			'description':'check the tests before a merge',
+			'executor_id':1
+		}
+		response = requests.post(
+			'http://localhost:5000/api/tasks', 
+			headers=auth_data,
+			json=data
+		)
+		task_id = response.json()['id']
+		self.assertTrue(response.status_code == 201)
+
+		# GET requests
+		response = requests.get('http://localhost:5000/api/tasks', headers=auth_data)
+		self.assertTrue(response.status_code == 200)
+
+		response = requests.get('http://localhost:5000/api/tasks/2', headers=auth_data)
+		self.assertTrue(response.status_code == 200)
+
+		# PUT request
+		data = {
+			'title':'merge your repository branches',
+			'status':'In progress'
+		}
+		response = requests.put(
+			'http://localhost:5000/api/tasks/2', 
+			headers=auth_data,
+			json=data
+		)
+		self.assertTrue(response.status_code == 200)
+
+		# DELETE request
+		response = requests.delete('http://localhost:5000/api/tasks/2', headers=auth_data)
+		self.assertTrue(response.status_code == 200)
 
 
 if __name__ == '__main__':
