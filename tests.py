@@ -61,6 +61,14 @@ class UserModelCase(unittest.TestCase):
 		self.assertEqual(f, [t1, t4])
 
 	def test_API(self):
+		# The app instance is created as a global variable and because of that 
+		# the app API works with the original database. The way to fix it:
+		# write a function that creates an application instance at runtime.
+		url = 'http://localhost:5000/api/tokens'
+		token = requests.post(url, auth=('test','test')).json()['token']
+		# print(Task.query.all())
+		auth_data = {'Authorization':f'Bearer {token}'}
+
 		# checks for the 'create_task' view function
 		# [ERROR] do not include title or executor_id fields in your request
 		# [ERROR] use an incorrect executor_id
@@ -69,7 +77,6 @@ class UserModelCase(unittest.TestCase):
 		# [ERROR] do not include all of the following fields: 
 		# 		['title', 'description', 'status', 'executor_id']
 		# [ERROR] create a duplicate task
-		pass
 
 
 if __name__ == '__main__':
