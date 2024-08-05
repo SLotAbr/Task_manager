@@ -94,6 +94,6 @@ def update_task(id):
 @token_auth.login_required
 def delete_task(id):
 	task = Task.query.get_or_404(id)
-	task.delete()
+	db.session.delete(task)
 	db.session.commit()
 	return {'message':f'The task with id={id} deleted'}
