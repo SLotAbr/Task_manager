@@ -19,7 +19,7 @@ Flask web application and RESTful API for it
 ### TODO
 - [x] add access tokens
 - [x] API errors may return JSON responses
-- [ ] write tests before a merge
+- [x] write tests before a merge
 
 ## How to
 ### Run the application
