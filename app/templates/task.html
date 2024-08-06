@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<table>
+		<tr>
+			<td>{{ task.title }}</td>
+			<td>{{ task.status }}</td>
+		</tr>
+		<tr><td>{{ task.description }}</td></tr>
+		<tr>
+			<td>Created at: {{ task.created_at.strftime("%Y.%m.%d %H:%M") }}</td>
+			<td>Updated at: {{ task.updated_at.strftime("%Y.%m.%d %H:%M") }}</td>
+		</tr>
+	</table>
+	<hr>
+{% endblock %}

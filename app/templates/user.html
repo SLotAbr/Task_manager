@@ -15,7 +15,10 @@
 	{% for task in tasks %}
 		<tr>
 			<td>{{ task.id }}</td>
-			<td>{{ task.title }}</td>
+			<td><a href="{{ url_for('task', task_id=task.id ) }}">
+					{{ task.title }}
+				</a>
+			</td>
 			<td>{{ task.status }}</td>
 			<td>{{ task.executor.username }}</td>
 			<td>{{ task.created_at.strftime("%Y.%m.%d %H:%M") }}</td>

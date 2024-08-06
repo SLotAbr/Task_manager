@@ -30,3 +30,10 @@ def user(username):
 def tasks():
 	tasks = Task.query.all()
 	return render_template('tasks.html', tasks=tasks)
+
+
+@app.route('/task/<task_id>')
+@login_required
+def task(task_id):
+	task = Task.query.filter_by(id=task_id).first_or_404()
+	return render_template('task.html', task=task)
