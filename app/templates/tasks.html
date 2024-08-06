@@ -16,7 +16,10 @@
 				<td>{{ task.id }}</td>
 				<td>{{ task.title }}</td>
 				<td>{{ task.status }}</td>
-				<td>{{ task.executor.username }}</td>
+				<td><a href="{{ url_for('user', username=task.executor.username ) }}">
+						{{ task.executor.username }}
+					</a>
+				</td>
 				<td>{{ task.created_at }}</td>
 			</tr>
 		{% endfor %}

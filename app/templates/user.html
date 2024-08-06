@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<table>
+		<tr><td><h1>User: {{ user.username }}</h1></td></tr>
+		<tr><td>Tasks assigned: {{ user.tasks.count() }}</tr>
+		<tr><td>Tasks in progress: {{ user.tasks.filter_by(status='In progress').count() }}</td></tr>
+		<tr><td>Tasks completed: {{ user.tasks.filter_by(status='Completed').count() }}</td></tr>
+	</table>
+	<hr>
+	{% with tasks = user.tasks.all() %}
+	{% if tasks %}
+	<h2>Tasks assigned to {{ user.username }}:</h2>
+	<table>
+	{% for task in tasks %}
+		<tr>
+			<td>{{ task.id }}</td>
+			<td>{{ task.title }}</td>
+			<td>{{ task.status }}</td>
+			<td>{{ task.executor.username }}</td>
+			<td>{{ task.created_at }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+	{% endif %}
+	{% endwith %}
+
+{% endblock %}
