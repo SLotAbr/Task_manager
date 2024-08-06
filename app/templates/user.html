@@ -18,7 +18,7 @@
 			<td>{{ task.title }}</td>
 			<td>{{ task.status }}</td>
 			<td>{{ task.executor.username }}</td>
-			<td>{{ task.created_at }}</td>
+			<td>{{ task.created_at.strftime("%Y.%m.%d %H:%M") }}</td>
 		</tr>
 	{% endfor %}
 	</table>

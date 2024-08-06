@@ -20,7 +20,7 @@
 						{{ task.executor.username }}
 					</a>
 				</td>
-				<td>{{ task.created_at }}</td>
+				<td>{{ task.created_at.strftime("%Y.%m.%d %H:%M") }}</td>
 			</tr>
 		{% endfor %}
 	</table>
