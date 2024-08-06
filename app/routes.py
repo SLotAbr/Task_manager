@@ -1,6 +1,6 @@
 from flask import render_template
 from app import app
-from app.models import Task
+from app.models import User, Task
 from flask_login import login_required
 
 
@@ -14,10 +14,12 @@ def index():
 @app.route('/users')
 @login_required
 def users():
-	return render_template('users.html')
+	users = User.query.all()
+	return render_template('users.html', users=users)
 
 
 @app.route('/tasks')
 @login_required
 def tasks():
-	return render_template('tasks.html')
+	tasks = Task.query.all()
+	return render_template('tasks.html', tasks=tasks)

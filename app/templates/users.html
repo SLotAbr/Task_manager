@@ -2,4 +2,20 @@
 
 {% block content %}
 	<h1>Users</h1>
+	<table>
+		<tr>
+			<td>Username</td>
+			<td>Tasks asigned</td>
+			<td>Tasks in progress</td>
+			<td>Tasks completed</td>
+		</tr>
+		{% for user in users %}
+			<tr>
+				<td>{{ user.username }}</td>
+				<td>{{ user.tasks.count() }}</td>
+				<td>{{ user.tasks.filter_by(status='In progress').count() }}</td>
+				<td>{{ user.tasks.filter_by(status='Completed').count() }}</td>
+			</tr>
+		{% endfor %}
+	</table>
 {% endblock %}

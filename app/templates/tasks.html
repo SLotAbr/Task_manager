@@ -2,4 +2,24 @@
 
 {% block content %}
 	<h1>Tasks</h1>
+	{% if tasks %}
+	<table>
+		<tr>
+			<td>ID</td>
+			<td>Title</td>
+			<td>Status</td>
+			<td>Executor</td>
+			<td>Creation date</td>
+		</tr>
+		{% for task in tasks %}
+			<tr>
+				<td>{{ task.id }}</td>
+				<td>{{ task.title }}</td>
+				<td>{{ task.status }}</td>
+				<td>{{ task.executor.username }}</td>
+				<td>{{ task.created_at }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+	{% endif %}
 {% endblock %}
