@@ -1,8 +1,9 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import TaskForm
+from app.forms import TaskForm, EditTaskForm
 from app.models import User, Task
 from flask_login import login_required
+from datetime import datetime
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -50,3 +51,35 @@ def tasks():
 def task(task_id):
 	task = Task.query.filter_by(id=task_id).first_or_404()
 	return render_template('task.html', task=task)
+
+
+@app.route('/edit_task/<task_id>', methods=['GET', 'POST'])
+@login_required
+def edit_task(task_id):
+	form = EditTaskForm()
+	current_task = Task.query.filter_by(id=task_id).first_or_404()
+	if form.validate_on_submit():
+		user = User.query.filter_by(username=form.executor.data).first()
+		task = Task.query.filter_by(
+			title=form.title.data, 
+			description=form.description.data, 
+			executor=user
+		)
+		if task is not None:
+			if task.id != task_id:
+				flash(f'This task already exists. Its id: {task.id}.')	
+		else:
+			current_task.title = form.title.data
+			current_task.description = form.description.data
+			current_task.status = form.status.data
+			current_task.executor = user
+			current_task.updated_at = datetime.utcnow()
+			db.session.commit()
+			flash('Your changes have been saved.')
+		return redirect(url_for('edit_task', task_id=task_id))
+	elif request.method == 'GET':
+		form.title.data = current_task.title
+		form.description.data = current_task.description
+		form.status.data = current_task.status
+		form.executor.data = current_task.executor.username
+	return render_template('edit_task.html', form=form)

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField
+from wtforms import StringField, TextAreaField, SubmitField, SelectField
 from wtforms.validators import ValidationError, DataRequired, Length
 from app.models import User
 
@@ -17,3 +17,8 @@ class TaskForm(FlaskForm):
 		user = User.query.filter_by(username=executor.data).first()
 		if user is None:
 			raise ValidationError('User with the given username does not exist.')
+
+
+class EditTaskForm(TaskForm):
+	status = SelectField('Status', 
+		choices = ['Created', 'In progress', 'Completed'], default = 'In progress')
