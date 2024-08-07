@@ -2,4 +2,30 @@
 
 {% block content %}
 	<h1>Hello, {{ current_user.username }}!</h1>
+	<p>You can register a new task</p>
+	<form action="" method="post">
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.title.label }}<br>
+			{{ form.title(size=64) }}
+			{% for error in form.title.errors %}<br>
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.description.label }}<br>
+			{{ form.description(cols=64, rows=10) }}<br>
+			{% for error in form.description.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.executor.label }}<br>
+			{{ form.executor(size=64) }}<br>
+			{% for error in form.executor.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>{{ form.submit() }}</p>
+	</form>
 {% endblock %}

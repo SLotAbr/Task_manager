@@ -1,14 +1,26 @@
 from flask import render_template
-from app import app
+from app import app, db
+from app.forms import TaskForm
 from app.models import User, Task
 from flask_login import login_required
 
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-	return render_template('index.html')
+	form = TaskForm()
+	# redirects the user if the submit is successful
+	if form.validate_on_submit():
+		user = User.query.filter_by(username=form.executor.data).first()
+		task = Task(title=form.title.data, 
+			description=form.description.data, executor=user)
+		db.session.add(task)
+		db.session.commit()
+		flash('Your task is now live!')
+		# the `Post/Redirect/Get` pattern
+		return redirect(url_for('tasks'))
+	return render_template('index.html', form=form)
 
 
 @app.route('/users')
