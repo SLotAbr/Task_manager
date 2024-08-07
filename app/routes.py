@@ -22,13 +22,14 @@ def users():
 @login_required
 def user(username):
 	user = User.query.filter_by(username=username).first_or_404()
-	return render_template('user.html', user=user)
+	tasks = user.tasks.order_by(Task.created_at.desc()).all()
+	return render_template('user.html', user=user, tasks=tasks)
 
 
 @app.route('/tasks')
 @login_required
 def tasks():
-	tasks = Task.query.all()
+	tasks = Task.query.order_by(Task.created_at.desc()).all()
 	return render_template('tasks.html', tasks=tasks)
 
 
