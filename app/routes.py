@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from app.forms import TaskForm, EditTaskForm
 from app.models import User, Task
-from flask_login import login_required
+from flask_login import login_required, current_user
 from datetime import datetime
 
 
@@ -83,3 +83,16 @@ def edit_task(task_id):
 		form.status.data = current_task.status
 		form.executor.data = current_task.executor.username
 	return render_template('edit_task.html', form=form)
+
+
+@app.route('/delete_task/<task_id>')
+@login_required
+def delete_task(task_id):
+	task = Task.query.filter_by(id=task_id).first_or_404()
+	if current_user != task.executor:
+		flash("You're not allowed to delete this task.")
+	else:
+		db.session.delete(task)
+		db.session.commit()
+		flash("You have successfully deleted your task.")
+	return redirect(url_for('tasks'))
