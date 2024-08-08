@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<table>
+	<table class="table table-bordered">
 		<tr>
 			<td>{{ task.title }}</td>
-			<td>{{ task.status }}</td>
+			<td>Status: {{ task.status }}</td>
 		</tr>
-		<tr><td>{{ task.description }}</td></tr>
+		<tr><td colspan="2" style="white-space: pre-wrap;">{{ task.description }}</td></tr>
 		<tr>
 			<td>Created at: {{ task.created_at.strftime("%Y.%m.%d %H:%M") }}</td>
 			<td>Updated at: {{ task.updated_at.strftime("%Y.%m.%d %H:%M") }}</td>
 		</tr>
 	</table>
+	<a href="{{ url_for('edit_task', task_id=task.id ) }}">Edit this task</a>
 	<hr>
 {% endblock %}

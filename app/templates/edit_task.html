@@ -6,9 +6,9 @@
 		{{ form.hidden_tag() }}
 		<p>
 			{{ form.title.label }}<br>
-			{{ form.title(size=64) }}
-			{% for error in form.title.errors %}<br>
-			<span style="color: red;">[{{ error }}]</span>
+			{{ form.title(size=64) }}<br>
+			{% for error in form.title.errors %}
+			<div class="invalid-feedback">{{ error }}</div>
 			{% endfor %}
 		</p>
 		<p>
@@ -16,19 +16,19 @@
 		</p>
 		<p>
 			{{ form.description.label }}<br>
-			{{ form.description(cols=64, rows=10) }}<br>
+			{{ form.description(cols=64, rows=8) }}<br>
 			{% for error in form.description.errors %}
-			<span style="color: red;">[{{ error }}]</span>
+			<div class="invalid-feedback">{{ error }}</div>
 			{% endfor %}
 		</p>
 		<p>
 			{{ form.executor.label }}<br>
 			{{ form.executor(size=64) }}<br>
 			{% for error in form.executor.errors %}
-			<span style="color: red;">[{{ error }}]</span>
+			<div class="invalid-feedback">{{ error }}</div>
 			{% endfor %}
 		</p>
-		<p>{{ form.submit() }}</p>
+		<p>{{ form.submit(class='btn btn-primary mb-3') }}</p>
 	</form>
 	<hr>
 {% endblock %}

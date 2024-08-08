@@ -2,36 +2,40 @@
 
 {% block content %}
 	<h1>Tasks</h1>
-	<a href="{{ url_for('index') }}">Create a new task</a>
+	<b><a href="{{ url_for('index') }}">Create a new task</a></b>
 	{% if tasks %}
-	<table>
-		<tr>
-			<td>ID</td>
-			<td>Title</td>
-			<td>Status</td>
-			<td>Executor</td>
-			<td>Creation date</td>
-			<td></td>
-		</tr>
-		{% for task in tasks %}
+	<table class="table table-striped">
+		<thead>
 			<tr>
-				<td>{{ task.id }}</td>
-				<td><a href="{{ url_for('task', task_id=task.id ) }}">
-						{{ task.title }}
-					</a>
-				</td>
-				<td>{{ task.status }}</td>
-				<td><a href="{{ url_for('user', username=task.executor.username ) }}">
-						{{ task.executor.username }}
-					</a>
-				</td>
-				<td>{{ task.created_at.strftime("%Y.%m.%d %H:%M") }}</td>
-				<td><a href="{{ url_for('edit_task', task_id=task.id ) }}">
-						Edit
-					</a>
-				</td>
+				<th scope="col">ID</th>
+				<th scope="col">Title</th>
+				<th scope="col">Status</th>
+				<th scope="col">Executor</th>
+				<th scope="col">Creation date</th>
+				<th scope="col"></th>
 			</tr>
-		{% endfor %}
+		</thead>
+		<tbody>
+			{% for task in tasks %}
+				<tr>
+					<td>{{ task.id }}</td>
+					<td><a href="{{ url_for('task', task_id=task.id ) }}">
+							{{ task.title }}
+						</a>
+					</td>
+					<td>{{ task.status }}</td>
+					<td><a href="{{ url_for('user', username=task.executor.username ) }}">
+							{{ task.executor.username }}
+						</a>
+					</td>
+					<td>{{ task.created_at.strftime("%Y.%m.%d %H:%M") }}</td>
+					<td><a href="{{ url_for('edit_task', task_id=task.id ) }}">
+							Edit
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
 	</table>
 	{% endif %}
 {% endblock %}

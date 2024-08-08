@@ -2,13 +2,16 @@
 
 {% block content %}
 	<h1>Users</h1>
-	<table>
-		<tr>
-			<td>Username</td>
-			<td>Tasks assigned</td>
-			<td>Tasks in progress</td>
-			<td>Tasks completed</td>
-		</tr>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Username</th>
+				<th scope="col">Tasks assigned</th>
+				<th scope="col">Tasks in progress</th>
+				<th scope="col">Tasks completed</th>
+			</tr>
+		</thead>
+		<tbody>
 		{% for user in users %}
 			<tr>
 				<td><a href="{{ url_for('user', username=user.username) }}">
@@ -20,5 +23,6 @@
 				<td>{{ user.tasks.filter_by(status='Completed').count() }}</td>
 			</tr>
 		{% endfor %}
+		</tbody>
 	</table>
 {% endblock %}
