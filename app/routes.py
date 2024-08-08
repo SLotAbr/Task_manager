@@ -64,7 +64,7 @@ def edit_task(task_id):
 			title=form.title.data, 
 			description=form.description.data, 
 			executor=user
-		)
+		).first()
 		if task is not None:
 			if task.id != task_id:
 				flash(f'This task already exists. Its id: {task.id}.')	
