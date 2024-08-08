@@ -8,7 +8,7 @@
 			{{ form.title.label }}<br>
 			{{ form.title(size=64) }}<br>
 			{% for error in form.title.errors %}
-			<div class="invalid-feedback">{{ error }}</div>
+			<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
 		</p>
 		<p>
@@ -18,14 +18,14 @@
 			{{ form.description.label }}<br>
 			{{ form.description(cols=64, rows=8) }}<br>
 			{% for error in form.description.errors %}
-			<div class="invalid-feedback">{{ error }}</div>
+			<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
 		</p>
 		<p>
 			{{ form.executor.label }}<br>
 			{{ form.executor(size=64) }}<br>
 			{% for error in form.executor.errors %}
-			<div class="invalid-feedback">{{ error }}</div>
+			<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
 		</p>
 		<p>{{ form.submit(class='btn btn-primary mb-3') }}</p>
