@@ -6,15 +6,32 @@
 			<tr><th><h1>User: {{ user.username }}</h1></th></tr>
 		</thead>
 		<tbody>
-			<tr><td>Tasks assigned: {{ user.tasks.count() }}</tr>
-			<tr><td>Tasks in progress: {{ user.tasks.filter_by(status='In progress').count() }}</td></tr>
-			<tr><td>Tasks completed: {{ user.tasks.filter_by(status='Completed').count() }}</td></tr>
+			<tr><td>Tasks 
+				<a href="javascript:task_filter(username='{{ user.username }}',
+												status='',
+												description='Tasks assigned to {{ user.username }}:');">
+					assigned:
+				</a> {{ user.tasks.count() }}
+			</td></tr>
+			<tr><td>Tasks 
+				<a href="javascript:task_filter(username='{{ user.username }}', 
+												status='In progress',
+												description='Tasks in progress:');">
+					in progress:
+				</a> {{ user.tasks.filter_by(status='In progress').count() }}
+			</td></tr>
+			<tr><td>Tasks 
+				<a href="javascript:task_filter(username='{{ user.username }}', 
+												status='Completed',
+												description='Tasks completed:');">
+					completed:
+				</a> {{ user.tasks.filter_by(status='Completed').count() }}
+			</td></tr>
 		</tbody>
 	</table>
 	<hr>
 	{% if tasks %}
-	<h2>Tasks assigned to {{ user.username }}:</h2>
+	<h2 id="description">Tasks assigned to {{ user.username }}:</h2>
 	{% include '_tasks_listing.html' %}
 	{% endif %}
-
 {% endblock %}

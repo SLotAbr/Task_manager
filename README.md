@@ -8,6 +8,7 @@ Flask web application and RESTful API for it
 - [x] user credentials processing
 - [x] JWT tokens for emails
 - [x] API and unit tests for it
+- [x] Javascript-based task filter
 
 ## API
 | HTTP Method | Resource URL | Notes |

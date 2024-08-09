@@ -41,5 +41,23 @@
 
 			{% block content %}{% endblock %}
 		</div>
+
+		<script>
+			async function task_filter(username='', status='', description=''){
+				const response = await fetch('/task_filter', {
+					method: 'POST',
+					headers: {'Content-Type': 'application/json; charset=utf-8'},
+					body: JSON.stringify({
+						username: username,
+						status: status
+					})
+				})
+				const data = await response.json();
+				document.getElementById('task-table').innerHTML = data.text;
+				if (description) {
+					document.getElementById('description').innerText = description;
+				}
+			}
+		</script>
 	</body>
 </html>

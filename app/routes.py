@@ -96,3 +96,23 @@ def delete_task(task_id):
 		db.session.commit()
 		flash("You have successfully deleted your task.")
 	return redirect(url_for('tasks'))
+
+
+@app.route('/task_filter', methods=['POST'])
+@login_required
+def task_filter():
+	args = {}
+	data = request.get_json()
+	# execute search with the given params
+	if data.get('username'):
+		user = User.query.filter_by(username=data['username']).first()
+		args['executor'] = user
+	if data.get('status'):
+		args['status'] = data['status']
+	tasks = Task.query.filter_by(**args).all()
+	
+	# render HTML sub-template and return it as json
+	# return {'text': data["text"]}
+
+	# print(f'I got a request! My data. u: {data["username"]}, s: {data["status"]}')
+	return {'text': render_template('_tasks_listing.html', tasks=tasks) }
