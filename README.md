@@ -10,6 +10,12 @@ Flask web application and RESTful API for it
 * Task editing and removing functionality;
 * The application supports task management without using a web interface: see the "API" chapter below.
 
+## Demonstration
+| <img src="demonstration/login.png"> | <img src="demonstration/registration.png"> | <img src="demonstration/task_registration.png"> |
+|-|-|-|
+| <img src="demonstration/tasks.png"> | <img src="demonstration/users.png"> | <img src="demonstration/task.png"> |
+| <img src="demonstration/task_editor.png"> | <img src="demonstration/user.png"> | <img src="demonstration/filter.png"> |
+
 ## Development stages
 - [x] HTML templates
 - [x] base models
