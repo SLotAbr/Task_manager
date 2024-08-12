@@ -80,4 +80,7 @@ export MAIL_PORT=<your_port>
 * `http DELETE http://localhost:5000/api/tasks/1`
 
 ## Possible improvements
-* [code structure] use the application factory pattern
+* [code structure] use the application factory pattern;
+* add pagination for the user and task lists;
+* multi-user support for a single task;
+* add a reviewer role, without whose consent it won't be possible to set the status "completed" or change the task
