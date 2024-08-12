@@ -84,3 +84,6 @@ export MAIL_PORT=<your_port>
 * add pagination for the user and task lists;
 * multi-user support for a single task;
 * add a reviewer role, without whose consent it won't be possible to set the status "completed" or change the task
+
+## Acknowledgement
+I would like to thank Miguel Grinberg for his works on web development. They helped me to take the first steps in understanding the topic and in creating this project. Miguel has a personal blog that you can read by following [the link](https://blog.miguelgrinberg.com/index). Moreover, he is the author of a number of courses and books that you can find at [this link](https://blog.miguelgrinberg.com/post/my-courses-and-books)
