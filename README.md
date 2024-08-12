@@ -1,5 +1,14 @@
 # Task_manager
 Flask web application and RESTful API for it
+### Application features (web interface)
+* User registration;
+* Password recovery via email using JWT tokens;
+* Tasks creation through a specialized form;
+* Browse all registered users/tasks;
+* User statistics and a task filter based on it (which works without a page reload);
+* Personal task pages with all available information;
+* Task editing and removing functionality;
+* The application supports task management without using a web interface: see the "API" chapter below.
 
 ## Development stages
 - [x] HTML templates
