@@ -15,7 +15,7 @@
 			{{ form.password(size=32) }}
 		</p>
 		<p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-		<p>{{ form.submit() }}</p>
+		<p>{{ form.submit(class='btn btn-primary mb-3') }}</p>
 	</form>
 	<p>New User? <a href="{{ url_for('auth.register') }}">Click to Register!</a></p>
 	<p>Forgot Your Password?
