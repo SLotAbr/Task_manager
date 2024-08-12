@@ -65,9 +65,10 @@ def edit_task(task_id):
 			description=form.description.data, 
 			executor=user
 		).first()
-		if task is not None:
+		# the client may change only the status field
+		if (task is not None) and (form.status.data == task.status):
 			if task.id != task_id:
-				flash(f'This task already exists. Its id: {task.id}.')	
+				flash(f'This task already exists. Its id: {task.id}.')
 		else:
 			current_task.title = form.title.data
 			current_task.description = form.description.data
@@ -103,16 +104,10 @@ def delete_task(task_id):
 def task_filter():
 	args = {}
 	data = request.get_json()
-	# execute search with the given params
 	if data.get('username'):
 		user = User.query.filter_by(username=data['username']).first()
 		args['executor'] = user
 	if data.get('status'):
 		args['status'] = data['status']
 	tasks = Task.query.filter_by(**args).all()
-	
-	# render HTML sub-template and return it as json
-	# return {'text': data["text"]}
-
-	# print(f'I got a request! My data. u: {data["username"]}, s: {data["status"]}')
 	return {'text': render_template('_tasks_listing.html', tasks=tasks) }

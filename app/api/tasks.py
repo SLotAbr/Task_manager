@@ -80,10 +80,12 @@ def update_task(id):
 				else task.executor_id
 		).first()
 		if is_existed:
-			payload = {'error':'Conflict'}
-			payload['message'] = "Your request creates a duplicate task. " \
-				f"Duplicate ID: {is_existed.id}"
-			return payload, 409
+			# the client may change only the status field
+			if ('status' in data) and (data['status']==is_existed.status):
+				payload = {'error':'Conflict'}
+				payload['message'] = "Your request creates a duplicate task. " \
+					f"Duplicate ID: {is_existed.id}"
+				return payload, 409
 
 	task.from_dict(data)
 	db.session.commit()
